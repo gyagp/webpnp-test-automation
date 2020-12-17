@@ -73,25 +73,13 @@
       "sleep_interval": 3
     }
   ],
-  "win_chrome_path": "C:\\Users\\haoyunfe\\AppData\\Local\\Google\\Chrome SxS\\Application\\chrome.exe",
+  "win_chrome_path": "LOCALAPPDATA\\Google\\Chrome SxS\\Application\\chrome.exe",
   "linux_chrome_path": "/usr/bin/google-chrome-unstable",
   "chrome_flags": ["--enable-unsafe-webgpu"],
   "update_browser_sched": "0 0 0 * * 0,1,2,3,4,5,6",
   "intel_test_cadence": "0 0 1 * * 0,1,2,3,4,5,6",
   "amd_test_cadence": "0 0 1 * * Sat",
   "enable_cron": false,
-  "mail_test_report": {
-    "from": "bots@wp-27.sh.intel.com",
-    "to": [
-           "webgraphics@intel.com"
-          ]
-  },
-  "mail_dev_notice": {
-    "from": "bots@wp-27.sh.intel.com",
-    "to": [
-           "webgraphics@intel.com"
-          ]
-  },
   "result_server": {
     "host": "10.239.115.92",
     "username": "banana",

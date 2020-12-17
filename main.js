@@ -1,6 +1,5 @@
 "use strict";
 
-
 const genDeviceInfo = require('./src/get_device_info.js');
 const runTest = require('./src/run.js');
 const browser = require('./src/browser.js');
@@ -15,6 +14,18 @@ const os = require('os');
 const GetChromiumBuild = require('./src/get_chromium_build.js');
 //const repo = require('./src/tfjs_repo.js');
 
+const args = require('yargs')
+  .usage('node $0 [args]')
+  .option('email', {
+    type: 'string',
+    describe: 'email to',
+  })
+  .option('update-chrome', {
+    type: 'boolean',
+    describe: 'Update chrome',
+  })
+  .help()
+  .argv
 
 const cpuModel = os.cpus()[0].model;
 const platform = runTest.getPlatformName();
@@ -68,16 +79,14 @@ async function main() {
     //   console.log(chartImages);
     // }
 
-    let mailType = 'test_report';
-    if (cpuModel.includes('AMD') || settings.dev_mode)
-      mailType = 'dev_notice'; // If the test is on AMD platform, then send dev team.
-
     // Pull all results to make sure getting latest results of competitors
     // await runTest.pullRemoteResults();
     const testReports = await genTestReport(workloadResults);
 
     console.log(subject);
-    await sendMail(subject, testReports, mailType, chartImages);
+
+    if ('email' in args)
+      await sendMail(args['email'], subject, testReports, chartImages);
   } catch (err) {
 
     console.log(err);
@@ -89,7 +98,8 @@ async function main() {
     }
 
     console.log(subject);
-    await sendMail(subject, err, 'failure_notice');
+    if ('email' in args)
+      await sendMail(args['email'], subject, err, 'failure_notice');
   }
 
   // Update the browser version in config.json if necessary
@@ -97,7 +107,6 @@ async function main() {
   // await chart.cleanUpChartFiles();
 
 }
-
 
 if (settings.enable_cron) {
   cron.schedule(settings.update_browser_sched, () => {
@@ -118,7 +127,9 @@ if (settings.enable_cron) {
     });
   }
 } else {
-  browser.updateChrome();
+  if ('update-chrome' in args)
+    browser.updateChrome();
+
   settings.chrome_flags = ["--enable-unsafe-webgpu", "--enable-dawn-features=disable_robustness",
     "--enable-features=WebAssemblySimd,WebAssemblyThreads"];
   // main().then(() => {

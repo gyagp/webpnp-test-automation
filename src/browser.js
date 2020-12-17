@@ -11,7 +11,8 @@ function configChromePath(setting) {
   let platform = os.platform();
 
   if (platform === 'win32') {
-    setting['chrome_path'] = setting.win_chrome_path.replace('HOME_DIR', os.homedir());
+    setting['chrome_path'] = setting.win_chrome_path.replace('HOME_DIR', os.homedir())
+        .replace('LOCALAPPDATA', process.env.LOCALAPPDATA);
   } else if (platform === 'linux') {
     setting['chrome_path'] = setting.linux_chrome_path;
   } else {

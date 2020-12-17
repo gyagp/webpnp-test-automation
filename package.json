@@ -28,6 +28,7 @@
     "puppeteer-core": "^5.1.0",
     "ssh2-promise": "^0.1.7",
     "ssh2-sftp-client": "^5.1.2",
-    "systeminformation": "^4.26.4"
+    "systeminformation": "^4.26.4",
+    "yargs": "^16.2.0"
   }
 }

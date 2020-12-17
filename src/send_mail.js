@@ -8,19 +8,10 @@ const settings = require('../config.json');
 * Send mail to corresponding mail list
 * @param {String}, subject, represents mail's subject
 * @param {String}, html, uses html document to repensent mail content
-* @param {String}, mailType, one of ["test_report", "dev_notice"]
 * @param {Array<String>}, chartImages, trend chart image file names in attachment
 */
-async function sendMail(subject, html, mailType, chartImages=[]) {
-  let from = "";
-  let to = "";
-  if (mailType === "test_report") {
-    from = settings.mail_test_report.from;
-    to = settings.mail_test_report.to;
-  } else {
-    from = settings.mail_dev_notice.from;
-    to = settings.mail_dev_notice.to;
-  }
+async function sendMail(to, subject, html, chartImages=[]) {
+  let from = "webgraphics@intel.com";
 
   // Create reusable transporter object
   let transporter = nodemailer.createTransport({
