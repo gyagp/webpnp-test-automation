@@ -1,0 +1,6 @@
+node_modules/
+results/
+userData/
+
+package-lock.json
+test.html
